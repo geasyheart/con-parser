@@ -1,9 +1,7 @@
 # -*- coding: utf8 -*-
 #
 import math
-import os
-from abc import abstractmethod
-from typing import Optional, Union
+from typing import Optional, Union, List
 
 import torch
 from torch import nn
@@ -13,8 +11,8 @@ from transformers import get_linear_schedule_with_warmup, AdamW, set_seed, AutoT
 from src.algo import Tree
 from src.config import MODEL_PATH
 from src.metric import SpanMetric
-from src.transform import ConTransform, get_labels
 from src.model import CRFConstituencyModel
+from src.transform import ConTransform, get_labels, encoder_texts
 from src.utils import logger
 
 
@@ -27,7 +25,7 @@ class ConParser(object):
         self.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
 
         self.labels = get_labels()
-        self.id_labels = {v:k for k, v in self.labels.items()}
+        self.id_labels = {v: k for k, v in self.labels.items()}
 
     def build_model(self, transformer):
         self.model = CRFConstituencyModel(transformer=transformer, n_labels=len(self.labels))
@@ -197,24 +195,37 @@ class ConParser(object):
 
         return total_loss, metric
 
+    loaded = False
+
+    def load(self, pretrained_model_name, device='cpu'):
+        self.device = torch.device(device)
+        if not self.loaded:
+            self.build_tokenizer(pretrained_model_name=pretrained_model_name)
+            self.build_model(transformer=pretrained_model_name)
+            self.load_weights(save_path=str(MODEL_PATH.joinpath('dev_metric_7.7020e-01.pt')))
+            self.loaded = True
+
     @torch.no_grad()
-    def predict(self, loader):
+    def predict(self, samples: List[List[str]]):
         self.model.eval()
-        preds = {'trees': [], 'probs': [] if self.args.prob else None}
-        for data in tqdm(loader, desc='predict'):
-            words, trees, charts = data
-            word_mask = words.ne(self.tokenizer.pad_token_id)[:, 1:]
-            mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
-            mask = (mask.unsqueeze(1) & mask.unsqueeze(2)).triu_(1)
-            lens = mask[:, 0].sum(-1)
-            s_span, s_label = self.model(words)
-            if self.args.mbr:
-                s_span = self.model.crf(s_span, mask, mbr=True)
-            chart_preds = self.model.decode(s_span, s_label, mask)
-            preds['trees'].extend([Tree.build(tree, [(i, j, self.id_labels[label]) for i, j, label in chart])
-                                   for tree, chart in zip(trees, chart_preds)])
-            if self.args.prob:
-                preds['probs'].extend([prob[:i - 1, 1:i].cpu() for i, prob in zip(lens, s_span)])
+
+        preds = {'trees': [], 'probs': []}
+
+        words = encoder_texts(texts=samples, tokenizer=self.tokenizer)
+        trees = [Tree.totree(i) for i in samples]
+
+        word_mask = words.ne(self.tokenizer.pad_token_id)[:, 1:]
+        mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
+        mask = (mask.unsqueeze(1) & mask.unsqueeze(2)).triu_(1)
+        lens = mask[:, 0].sum(-1)
+        s_span, s_label = self.model(words)
+        # if self.args.mbr:
+        #     s_span = self.model.crf(s_span, mask, mbr=True)
+        chart_preds = self.model.decode(s_span, s_label, mask)
+        preds['trees'].extend([Tree.build(tree, [(i, j, self.id_labels[label]) for i, j, label in chart])
+                               for tree, chart in zip(trees, chart_preds)])
+
+        preds['probs'].extend([prob[:i - 1, 1:i].cpu() for i, prob in zip(lens, s_span)])
 
         return preds
 
