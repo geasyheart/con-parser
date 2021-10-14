@@ -197,12 +197,12 @@ class ConParser(object):
 
     loaded = False
 
-    def load(self, pretrained_model_name, device='cpu'):
+    def load(self, pretrained_model_name, model_path: str, device='cpu'):
         self.device = torch.device(device)
         if not self.loaded:
             self.build_tokenizer(pretrained_model_name=pretrained_model_name)
             self.build_model(transformer=pretrained_model_name)
-            self.load_weights(save_path=str(MODEL_PATH.joinpath('dev_metric_7.7020e-01.pt')))
+            self.load_weights(save_path=model_path)
             self.loaded = True
 
     @torch.no_grad()

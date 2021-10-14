@@ -3,11 +3,12 @@
 
 
 from src import con_parser
-from src.config import TRAIN_PATH, DEV_PATH
+from src.config import MODEL_PATH
 
 m = con_parser.ConParser()
 m.load(
-    pretrained_model_name='hfl/chinese-electra-180g-small-discriminator'
+    pretrained_model_name='hfl/chinese-electra-180g-small-discriminator',
+    model_path=str(MODEL_PATH.joinpath('dev_metric_7.7020e-01.pt'))
 )
 
 sample1 = [('广西', 'NR'),
