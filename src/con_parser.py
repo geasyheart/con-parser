@@ -145,8 +145,8 @@ class ConParser(object):
                 )
 
             logger.info(
-                f'Epoch:{_epoch} lr: {scheduler.get_last_lr()[0]:.4e} train loss: {train_loss}' + \
-                f'dev loss: {dev_loss}' + \
+                f'Epoch:{_epoch} lr: {scheduler.get_last_lr()[0]:.4e} train loss: {train_loss} ' + \
+                f'dev loss: {dev_loss} ' + \
                 f'dev metric: {dev_metric}'
             )
 
