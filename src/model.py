@@ -8,6 +8,7 @@ from src.layers.affine import Biaffine
 from src.layers.mlp import MLP
 from src.layers.transformer import TransformerEmbedding
 from src.layers.treecrf import CRFConstituency
+from src.utils import logger
 
 
 class CRFConstituencyModel(nn.Module):
@@ -90,7 +91,10 @@ class CRFConstituencyModel(nn.Module):
         span_loss, span_probs = self.crf(s_span, mask, span_mask, mbr)
         label_loss = self.criterion(s_label[span_mask], charts[span_mask])
         loss = span_loss + label_loss
-
+        if span_loss.item() < 0:
+            logger.warning(f'span_loss litter than 0, current value: {span_loss.item()}')
+        if label_loss.item() < 0:
+            logger.warning(f'label_loss litter than 0, current value: {span_loss.item()}')
         return loss, span_probs
 
     def decode(self, s_span, s_label, mask):

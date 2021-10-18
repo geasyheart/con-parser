@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from torch.nn.utils.rnn import pad_sequence
-from transformers import BertTokenizer, AutoModel
+from transformers import AutoModel
 
 from src.layers.scale_mix import ScalarMix
 
@@ -60,8 +60,6 @@ class TransformerEmbedding(nn.Module):
         self.dropout = dropout
         self.requires_grad = requires_grad
         self.max_len = int(max(0, self.transformer.config.max_position_embeddings) or 1e12) - 2
-
-        self.tokenizer = BertTokenizer.from_pretrained(model)
 
         self.scalar_mix = ScalarMix(self.n_layers, dropout)
         self.projection = nn.Linear(self.hidden_size, self.n_out, False) if self.hidden_size != n_out else nn.Identity()

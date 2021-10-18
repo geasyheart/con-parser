@@ -15,4 +15,4 @@ MODEL_PATH = DATA_PATH.joinpath('savepoint')
 # DEV_PATH = SAMPLE_PATH
 
 # 如果一个句子中词语的个数超过50那么则忽略这条数据，显存不够
-WORD_COUNT = 50
+WORD_COUNT = 75

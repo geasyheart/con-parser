@@ -23,7 +23,7 @@ def get_labels() -> Dict:
     def _get_label(file):
         labels = {}
         with open(file, 'r', encoding='utf-8') as f:
-            for line in f:
+            for line in tqdm(f, desc='get labels'):
                 tree = nltk.Tree.fromstring(line)
                 for i, j, label in Tree.factorize(Tree.binarize(tree)[0]):
                     labels.setdefault(label, 0)
@@ -32,7 +32,7 @@ def get_labels() -> Dict:
 
     label1 = _get_label(TRAIN_PATH)
     label2 = _get_label(DEV_PATH)
-    final_label = {}
+    final_label = {'[PAD]': 0}
     for label in label1:
         final_label.setdefault(label, len(final_label))
     for label in label2:
