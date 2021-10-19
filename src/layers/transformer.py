@@ -121,3 +121,29 @@ class TransformerEmbedding(nn.Module):
         embed = self.projection(embed)
 
         return embed
+
+
+class TransformerWordEmbedding(torch.nn.Module):
+    def __init__(self, transformer: str, ):
+        super(TransformerWordEmbedding, self).__init__()
+        self.encoder = AutoModel.from_pretrained(transformer)
+        self.dropout = nn.Dropout(p=self.encoder.config.hidden_dropout_prob)
+
+    def forward(self, input_ids, token_type_ids, attention_mask, word_index, word_attention_mask):
+        hidden_states = self.encoder(
+            input_ids=input_ids,
+            token_type_ids=token_type_ids,
+            attention_mask=attention_mask
+        )
+        sequence_output = hidden_states[-1]
+        sequence_output = self.dropout(sequence_output)
+
+        bert_output = sequence_output[:, 1:-1, :]
+        # bert_output = torch.cat([bert_output[:, :1, :], torch.gather(
+        #     bert_output[:, 1:, :], dim=1, index=word_index.unsqueeze(-1).expand(-1, -1, bert_output.size(-1))
+        # )], dim=1)
+        # 这个方式是采用首字作为整个词的embedding
+        bert_output = torch.gather(bert_output, dim=1, index=word_index.unsqueeze(-1).expand(-1, -1, bert_output.size(-1)))
+        return bert_output, word_attention_mask
+
+
