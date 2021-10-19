@@ -8,6 +8,7 @@ from src.layers.affine import Biaffine
 from src.layers.mlp import MLP
 from src.layers.transformer import TransformerEmbedding
 from src.layers.treecrf import CRFConstituency
+from src.transform import get_tags
 from src.utils import logger
 
 
@@ -21,18 +22,18 @@ class CRFConstituencyModel(nn.Module):
                                             pad_index=0,
                                             dropout=0.33,
                                             requires_grad=True)
-
-        self.span_mlp_l = MLP(n_in=self.encoder.n_out, n_out=n_span_mlp, dropout=mlp_dropout)
-        self.span_mlp_r = MLP(n_in=self.encoder.n_out, n_out=n_span_mlp, dropout=mlp_dropout)
-        self.label_mlp_l = MLP(n_in=self.encoder.n_out, n_out=n_label_mlp, dropout=mlp_dropout)
-        self.label_mlp_r = MLP(n_in=self.encoder.n_out, n_out=n_label_mlp, dropout=mlp_dropout)
+        self.tags_embedding = nn.Embedding(len(get_tags()), embedding_dim=64)
+        self.span_mlp_l = MLP(n_in=self.encoder.n_out + self.tags_embedding.embedding_dim, n_out=n_span_mlp, dropout=mlp_dropout)
+        self.span_mlp_r = MLP(n_in=self.encoder.n_out + self.tags_embedding.embedding_dim, n_out=n_span_mlp, dropout=mlp_dropout)
+        self.label_mlp_l = MLP(n_in=self.encoder.n_out + self.tags_embedding.embedding_dim, n_out=n_label_mlp, dropout=mlp_dropout)
+        self.label_mlp_r = MLP(n_in=self.encoder.n_out + self.tags_embedding.embedding_dim, n_out=n_label_mlp, dropout=mlp_dropout)
 
         self.span_attn = Biaffine(n_in=n_span_mlp, bias_x=True, bias_y=False)
         self.label_attn = Biaffine(n_in=n_label_mlp, n_out=n_labels, bias_x=True, bias_y=True)
         self.crf = CRFConstituency()
         self.criterion = nn.CrossEntropyLoss()
 
-    def forward(self, words):
+    def forward(self, words, tags=None):
         r"""
         Args:
             words (~torch.LongTensor): ``[batch_size, seq_len]``.
@@ -42,7 +43,7 @@ class CRFConstituencyModel(nn.Module):
                 The size is either ``[batch_size, seq_len, fix_len]`` if ``feat`` is ``'char'`` or ``'bert'``,
                 or ``[batch_size, seq_len]`` otherwise.
                 Default: ``None``.
-
+            tags
         Returns:
             ~torch.Tensor, ~torch.Tensor:
                 The first tensor of shape ``[batch_size, seq_len, seq_len]`` holds scores of all possible constituents.
@@ -54,6 +55,9 @@ class CRFConstituencyModel(nn.Module):
 
         x_f, x_b = x.chunk(2, -1)
         x = torch.cat((x_f[:, :-1], x_b[:, 1:]), -1)
+
+        tags_x = self.tags_embedding(tags)
+        x = torch.cat([x, tags_x], dim=-1)
 
         span_l = self.span_mlp_l(x)
         span_r = self.span_mlp_r(x)

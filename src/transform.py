@@ -42,6 +42,34 @@ def get_labels() -> Dict:
     return final_label
 
 
+def get_tags() -> Dict:
+    pos_map_path = DATA_PATH.joinpath('pos_map.json')
+    if pos_map_path.exists():
+        with open(pos_map_path, 'r', encoding='utf-8') as f:
+            return json.loads(f.read())
+
+    def _get_pos(file):
+        pos = {}
+        with open(file, 'r', encoding='utf-8') as f:
+            for line in tqdm(f, desc='get tags'):
+                tree = nltk.Tree.fromstring(line)
+                words, tags = zip(*tree.pos())
+                for tag in tags:
+                    pos.setdefault(tag, 0)
+        return pos
+    pos1 = _get_pos(TRAIN_PATH)
+    pos2 = _get_pos(DEV_PATH)
+    final_pos = {'[PAD]': 0}
+
+    for _pos in pos1:
+        final_pos.setdefault(_pos, len(final_pos))
+    for _pos in pos2:
+        final_pos.setdefault(_pos, len(final_pos))
+    with open(pos_map_path, 'w', encoding='utf-8') as f:
+        f.write(json.dumps(final_pos, ensure_ascii=False, indent=2))
+    return final_pos
+
+
 def encoder_texts(texts: List[List[str]], tokenizer):
     # 统计句子中最大的词长度
     fix_len = max([max([len(word) for word in text]) for text in texts])
@@ -81,6 +109,7 @@ class ConTransform(dataset.Dataset):
         self.tokenizer = AutoTokenizer.from_pretrained(transformer) if isinstance(transformer, str) else transformer
 
         self.labels = get_labels()
+        self.tags = get_tags()
 
     def __len__(self):
         return len(self.trees)
@@ -88,18 +117,19 @@ class ConTransform(dataset.Dataset):
     def __getitem__(self, item):
         tree = self.trees[item]
         words, tags = zip(*tree.pos())
-
+        # 为什么在最前面添加0,因为charts[:, 0,0]均为-1
+        tag_ids = [0] + [self.tags[tag] for tag in tags]
         chart = [[-1] * (len(words) + 1) for _ in range(len(words) + 1)]
         for i, j, label in Tree.factorize(Tree.binarize(tree)[0]):
             chart[i][j] = self.labels[label]
-        return words, tags, tree, torch.tensor(chart, dtype=torch.long)
+        return words, torch.tensor(tag_ids, dtype=torch.long), tree, torch.tensor(chart, dtype=torch.long)
 
     def to_dataloader(self, batch_size, shuffle):
         return dataloader.DataLoader(self, batch_size=batch_size, shuffle=shuffle, collate_fn=self.collate_fn)
 
     def collate_fn(self, batch):
         words = encoder_texts([i[0] for i in batch], tokenizer=self.tokenizer)
-        tags = [i[1] for i in batch]
+        tags = pad_sequence([i[1] for i in batch], batch_first=True)
         trees = [i[2] for i in batch]
         charts = [i[3] for i in batch]
         max_chart_len = max([i.size(0) for i in charts])
@@ -109,7 +139,7 @@ class ConTransform(dataset.Dataset):
             l = chart.size(0)
             charts_matrix[i, :l, :l] = chart
 
-        return words.to(self.device), trees, charts_matrix.to(self.device)
+        return words.to(self.device), tags.to(self.device), trees, charts_matrix.to(self.device)
 
 
 
