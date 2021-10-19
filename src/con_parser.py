@@ -1,10 +1,11 @@
 # -*- coding: utf8 -*-
 #
 import math
-from typing import Optional, Union, List
+from typing import Optional, Union, List, Tuple
 
 import torch
 from torch import nn
+from torch.nn.utils.rnn import pad_sequence
 from tqdm import tqdm
 from transformers import get_linear_schedule_with_warmup, AdamW, set_seed, AutoTokenizer
 
@@ -12,7 +13,7 @@ from src.algo import Tree
 from src.config import MODEL_PATH
 from src.metric import SpanMetric
 from src.model import CRFConstituencyModel
-from src.transform import ConTransform, get_labels, encoder_texts
+from src.transform import ConTransform, get_labels, encoder_texts, get_tags
 from src.utils import logger
 
 
@@ -26,6 +27,8 @@ class ConParser(object):
 
         self.labels = get_labels()
         self.id_labels = {v: k for k, v in self.labels.items()}
+
+        self.tags = get_tags()
 
     def build_model(self, transformer):
         self.model = CRFConstituencyModel(transformer=transformer, n_labels=len(self.labels))
@@ -206,19 +209,28 @@ class ConParser(object):
             self.loaded = True
 
     @torch.no_grad()
-    def predict(self, samples: List[List[str]]):
+    def predict(self, samples: List[List[Tuple[str, str]]]):
         self.model.eval()
 
         preds = {'trees': [], 'probs': []}
 
-        words = encoder_texts(texts=samples, tokenizer=self.tokenizer)
+        words, tags = [], []
+        for sample in samples:
+            words.append([])
+            tags.append([0])
+            for word, tag in sample:
+                words[-1].append(word)
+                tags[-1].append(self.tags[tag])
+
+        words = encoder_texts(texts=words, tokenizer=self.tokenizer)
+        tags = pad_sequence([torch.tensor(tag, dtype=torch.long) for tag in tags], batch_first=True)
         trees = [Tree.totree(i) for i in samples]
 
         word_mask = words.ne(self.tokenizer.pad_token_id)[:, 1:]
         mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
         mask = (mask.unsqueeze(1) & mask.unsqueeze(2)).triu_(1)
         lens = mask[:, 0].sum(-1)
-        s_span, s_label = self.model(words)
+        s_span, s_label = self.model(words, tags)
         # if self.args.mbr:
         #     s_span = self.model.crf(s_span, mask, mbr=True)
         chart_preds = self.model.decode(s_span, s_label, mask)
