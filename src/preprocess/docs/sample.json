@@ -1,0 +1,121 @@
+{
+  "data": {
+    "words": "他指出要深入贯彻……论述，提高……站位，落实……责任",
+    "type": "简单句",
+    "label": "",
+    "clause": "",
+    "supplySubject": false,
+    "child": [
+      {
+        "words": "他",
+        "type": "",
+        "label": "主",
+        "clause": "",
+        "supplySubject": false,
+        "child": []
+      },
+      {
+        "words": "指出",
+        "type": "",
+        "label": "谓",
+        "clause": "",
+        "supplySubject": false,
+        "child": []
+      },
+      {
+        "words": "要深入贯彻……论述，提高……站位，落实……责任",
+        "type": "并列复句",
+        "label": "宾",
+        "clause": "",
+        "supplySubject": false,
+        "child": [
+          {
+            "words": "深入贯彻……论述",
+            "type": "",
+            "label": "",
+            "clause": "并行1",
+            "supplySubject": false,
+            "child": [
+              {
+                "words": "他",
+                "type": "",
+                "label": "主",
+                "clause": "",
+                "supplySubject": true,
+                "child": []
+              },
+              {
+                "words": "深入贯彻",
+                "type": "",
+                "label": "谓",
+                "clause": "",
+                "supplySubject": false,
+                "child": []
+              },
+              {
+                "words": "……论述",
+                "type": "",
+                "label": "宾",
+                "clause": "",
+                "supplySubject": false,
+                "child": []
+              }
+            ]
+          },
+          {
+            "words": "提高……站位",
+            "type": "",
+            "label": "",
+            "clause": "并行2",
+            "supplySubject": false,
+            "child": [
+
+              {
+                "words": "提高",
+                "type": "",
+                "label": "谓",
+                "clause": "",
+                "supplySubject": false,
+                "child": []
+              },
+              {
+                "words": "……站位",
+                "type": "",
+                "label": "宾",
+                "clause": "",
+                "supplySubject": false,
+                "child": []
+              }
+            ]
+          },
+          {
+            "words": "落实……责任",
+            "type": "",
+            "label": "",
+            "clause": "并行3",
+            "supplySubject": false,
+            "child": [
+
+              {
+                "words": "落实",
+                "type": "",
+                "label": "谓",
+                "clause": "",
+                "supplySubject": false,
+                "child": []
+              },
+              {
+                "words": "……责任",
+                "type": "",
+                "label": "宾",
+                "clause": "",
+                "supplySubject": false,
+                "child": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

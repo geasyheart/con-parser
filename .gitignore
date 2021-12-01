@@ -4,3 +4,4 @@ savepoint/
 __pycache__/
 .idea/
 *.log
+*.gv
