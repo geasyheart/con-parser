@@ -2,9 +2,11 @@
 #
 import json
 from unittest import TestCase
-from src.preprocess import convert,frontend
+from src.preprocess import convert, frontend
+
 with open('/home/yuzhang/PycharmProjects/con-parser/src/preprocess/docs/sample.json') as f:
     data = json.loads(f.read())
+
 
 class TestSample(TestCase):
     def test_convert(self):

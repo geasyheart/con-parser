@@ -29,10 +29,6 @@ class FrontendNode(object):
         self.children: List['FrontendNode'] = []
         self.parent: 'FrontendNode' = None
 
-        # check
-        if not self.words.strip():
-            raise ValueError('词不能为空')
-
     def add_child(self, node: 'FrontendNode'):
         self.children.append(node)
 
@@ -42,11 +38,11 @@ class FrontendNode(object):
     def __repr__(self):
         s = ''
         if self.type:
-            s += f'{self.type}\n'
+            s += f'句型：{self.type}\n'
         if self.label:
-            s += f'{self.label}\n'
+            s += f'成分：{self.label}\n'
         if self.clause:
-            s += f'{self.clause}\n'
+            s += f'分句句型：{self.clause}\n'
         s += self.words
         return s
 
@@ -56,8 +52,8 @@ class FrontendNode(object):
             'type': self.type,
             'label': self.label,
             'clause': self.clause,
-            'supply_subject': self.supply_subject,
-
+            'supplySubject': self.supply_subject,
+            'child': [c.to_dict() for c in self.children],
         }
 
 
@@ -104,7 +100,7 @@ class FrontendTree(object):
         for child in node.children:
             yield from self.dfs(node=child)
 
-    def pretty_tree(self, use_algo='dfs', filename="", format="svg"):
+    def pretty_tree(self, filename="", format="svg"):
         from graphviz import Digraph
         filename = filename or "tmp.gv"
 
@@ -115,17 +111,15 @@ class FrontendTree(object):
             else:
                 g.node(name=str(id(node)), label=str(node))
 
-
         for node in self.dfs(node=self.root):
             if node.parent:
                 g.edge(str(id(node.parent)), str(id(node)))
 
         g.view(filename=filename, directory='./examples')
 
-
-if __name__ == '__main__':
-    with open('/home/yuzhang/PycharmProjects/con-parser/src/preprocess/docs/sample.json', 'r') as f:
-        sample = json.loads(f.read())
-        tree = FrontendTree()
-        tree.generate_tree(sample)
-        tree.pretty_tree(filename='sample')
+    def to_dict(self):
+        """
+        原封不动返回给前端
+        :return:
+        """
+        return {'data': self.root.to_dict()}

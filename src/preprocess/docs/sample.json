@@ -69,7 +69,14 @@
             "clause": "并行2",
             "supplySubject": false,
             "child": [
-
+              {
+                "words": "",
+                "type": "",
+                "label": "主",
+                "clause": "",
+                "supplySubject": false,
+                "child": []
+              },
               {
                 "words": "提高",
                 "type": "",
@@ -95,7 +102,14 @@
             "clause": "并行3",
             "supplySubject": false,
             "child": [
-
+              {
+                "words": "",
+                "type": "",
+                "label": "主",
+                "clause": "",
+                "supplySubject": false,
+                "child": []
+              },
               {
                 "words": "落实",
                 "type": "",
