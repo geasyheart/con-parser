@@ -9,173 +9,173 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 348.174)">
 <title>%3</title>
 <polygon fill="white" stroke="none" points="-4,4 -4,-348.174 1125.98,-348.174 1125.98,4 -4,4"/>
-<!-- 139894414538512 -->
-<g id="node1" class="node"><title>139894414538512</title>
+<!-- 139737471235744 -->
+<g id="node1" class="node"><title>139737471235744</title>
 <ellipse fill="none" stroke="black" cx="273.65" cy="-317.304" rx="273.801" ry="26.7407"/>
 <text text-anchor="middle" x="273.65" y="-321.104" font-family="Times,serif" font-size="14.00">句型：简单句</text>
 <text text-anchor="middle" x="273.65" y="-306.104" font-family="Times,serif" font-size="14.00">他指出要深入贯彻……论述，提高……站位，落实……责任</text>
 </g>
-<!-- 139894414538624 -->
-<g id="node2" class="node"><title>139894414538624</title>
+<!-- 139737471235856 -->
+<g id="node2" class="node"><title>139737471235856</title>
 <ellipse fill="none" stroke="black" cx="150.65" cy="-216.957" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="150.65" y="-220.757" font-family="Times,serif" font-size="14.00">成分：主</text>
 <text text-anchor="middle" x="150.65" y="-205.757" font-family="Times,serif" font-size="14.00">他</text>
 </g>
-<!-- 139894414538512&#45;&gt;139894414538624 -->
-<g id="edge1" class="edge"><title>139894414538512&#45;&gt;139894414538624</title>
+<!-- 139737471235744&#45;&gt;139737471235856 -->
+<g id="edge1" class="edge"><title>139737471235744&#45;&gt;139737471235856</title>
 <path fill="none" stroke="black" d="M241.334,-290.464C224.451,-276.966 203.749,-260.413 186.39,-246.533"/>
 <polygon fill="black" stroke="black" points="188.164,-243.47 178.168,-239.959 183.792,-248.937 188.164,-243.47"/>
 </g>
-<!-- 139894414538680 -->
-<g id="node3" class="node"><title>139894414538680</title>
+<!-- 139737471235912 -->
+<g id="node3" class="node"><title>139737471235912</title>
 <ellipse fill="none" stroke="black" cx="273.65" cy="-216.957" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="273.65" y="-220.757" font-family="Times,serif" font-size="14.00">成分：谓</text>
 <text text-anchor="middle" x="273.65" y="-205.757" font-family="Times,serif" font-size="14.00">指出</text>
 </g>
-<!-- 139894414538512&#45;&gt;139894414538680 -->
-<g id="edge2" class="edge"><title>139894414538512&#45;&gt;139894414538680</title>
+<!-- 139737471235744&#45;&gt;139737471235912 -->
+<g id="edge2" class="edge"><title>139737471235744&#45;&gt;139737471235912</title>
 <path fill="none" stroke="black" d="M273.65,-290.207C273.65,-279.115 273.65,-265.998 273.65,-254.005"/>
 <polygon fill="black" stroke="black" points="277.15,-253.834 273.65,-243.835 270.15,-253.835 277.15,-253.834"/>
 </g>
-<!-- 139894414539128 -->
-<g id="node4" class="node"><title>139894414539128</title>
+<!-- 139737471236360 -->
+<g id="node4" class="node"><title>139737471236360</title>
 <ellipse fill="none" stroke="black" cx="587.65" cy="-216.957" rx="243.49" ry="37.4533"/>
 <text text-anchor="middle" x="587.65" y="-228.257" font-family="Times,serif" font-size="14.00">句型：并列复句</text>
 <text text-anchor="middle" x="587.65" y="-213.257" font-family="Times,serif" font-size="14.00">成分：宾</text>
 <text text-anchor="middle" x="587.65" y="-198.257" font-family="Times,serif" font-size="14.00">要深入贯彻……论述，提高……站位，落实……责任</text>
 </g>
-<!-- 139894414538512&#45;&gt;139894414539128 -->
-<g id="edge3" class="edge"><title>139894414538512&#45;&gt;139894414539128</title>
+<!-- 139737471235744&#45;&gt;139737471236360 -->
+<g id="edge3" class="edge"><title>139737471235744&#45;&gt;139737471236360</title>
 <path fill="none" stroke="black" d="M352.886,-291.487C389.223,-280.105 432.996,-266.395 472.85,-253.913"/>
 <polygon fill="black" stroke="black" points="474.125,-257.181 482.622,-250.852 472.033,-250.501 474.125,-257.181"/>
 </g>
-<!-- 139894414539856 -->
-<g id="node5" class="node"><title>139894414539856</title>
+<!-- 139737471237032 -->
+<g id="node5" class="node"><title>139737471237032</title>
 <ellipse fill="none" stroke="black" cx="289.65" cy="-116.61" rx="92.7622" ry="26.7407"/>
 <text text-anchor="middle" x="289.65" y="-120.41" font-family="Times,serif" font-size="14.00">分句句型：并行1</text>
 <text text-anchor="middle" x="289.65" y="-105.41" font-family="Times,serif" font-size="14.00">深入贯彻……论述</text>
 </g>
-<!-- 139894414539128&#45;&gt;139894414539856 -->
-<g id="edge4" class="edge"><title>139894414539128&#45;&gt;139894414539856</title>
+<!-- 139737471236360&#45;&gt;139737471237032 -->
+<g id="edge4" class="edge"><title>139737471236360&#45;&gt;139737471237032</title>
 <path fill="none" stroke="black" d="M487.177,-182.798C445.142,-168.926 397.323,-153.145 359.265,-140.584"/>
 <polygon fill="black" stroke="black" points="359.9,-137.108 349.307,-137.298 357.706,-143.756 359.9,-137.108"/>
 </g>
-<!-- 139894414572904 -->
-<g id="node9" class="node"><title>139894414572904</title>
+<!-- 139737471237144 -->
+<g id="node9" class="node"><title>139737471237144</title>
 <ellipse fill="none" stroke="black" cx="587.65" cy="-116.61" rx="86.9483" ry="26.7407"/>
 <text text-anchor="middle" x="587.65" y="-120.41" font-family="Times,serif" font-size="14.00">分句句型：并行2</text>
 <text text-anchor="middle" x="587.65" y="-105.41" font-family="Times,serif" font-size="14.00">提高……站位</text>
 </g>
-<!-- 139894414539128&#45;&gt;139894414572904 -->
-<g id="edge8" class="edge"><title>139894414539128&#45;&gt;139894414572904</title>
+<!-- 139737471236360&#45;&gt;139737471237144 -->
+<g id="edge8" class="edge"><title>139737471236360&#45;&gt;139737471237144</title>
 <path fill="none" stroke="black" d="M587.65,-179.336C587.65,-170.965 587.65,-162.074 587.65,-153.725"/>
 <polygon fill="black" stroke="black" points="591.15,-153.518 587.65,-143.518 584.15,-153.518 591.15,-153.518"/>
 </g>
-<!-- 139894423743848 -->
-<g id="node13" class="node"><title>139894423743848</title>
+<!-- 139737480437096 -->
+<g id="node13" class="node"><title>139737480437096</title>
 <ellipse fill="none" stroke="black" cx="887.65" cy="-116.61" rx="86.9483" ry="26.7407"/>
 <text text-anchor="middle" x="887.65" y="-120.41" font-family="Times,serif" font-size="14.00">分句句型：并行3</text>
 <text text-anchor="middle" x="887.65" y="-105.41" font-family="Times,serif" font-size="14.00">落实……责任</text>
 </g>
-<!-- 139894414539128&#45;&gt;139894423743848 -->
-<g id="edge12" class="edge"><title>139894414539128&#45;&gt;139894423743848</title>
+<!-- 139737471236360&#45;&gt;139737480437096 -->
+<g id="edge12" class="edge"><title>139737471236360&#45;&gt;139737480437096</title>
 <path fill="none" stroke="black" d="M688.798,-182.798C731.922,-168.661 781.094,-152.542 819.751,-139.869"/>
 <polygon fill="black" stroke="black" points="820.93,-143.166 829.342,-136.725 818.75,-136.514 820.93,-143.166"/>
 </g>
-<!-- 139894414573240 -->
-<g id="node6" class="node"><title>139894414573240</title>
+<!-- 139737471266096 -->
+<g id="node6" class="node"><title>139737471266096</title>
 <ellipse fill="none" stroke="red" cx="105.65" cy="-26.8701" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="105.65" y="-30.6701" font-family="Times,serif" font-size="14.00">成分：主</text>
 <text text-anchor="middle" x="105.65" y="-15.6701" font-family="Times,serif" font-size="14.00">他</text>
 </g>
-<!-- 139894414539856&#45;&gt;139894414573240 -->
-<g id="edge5" class="edge"><title>139894414539856&#45;&gt;139894414573240</title>
+<!-- 139737471237032&#45;&gt;139737471266096 -->
+<g id="edge5" class="edge"><title>139737471237032&#45;&gt;139737471266096</title>
 <path fill="none" stroke="black" d="M242.743,-93.2426C215.002,-80.0142 179.993,-63.3203 152.297,-50.1136"/>
 <polygon fill="black" stroke="black" points="153.739,-46.9235 143.206,-45.7785 150.726,-53.2419 153.739,-46.9235"/>
 </g>
-<!-- 139894423743512 -->
-<g id="node7" class="node"><title>139894423743512</title>
+<!-- 139737471266432 -->
+<g id="node7" class="node"><title>139737471266432</title>
 <ellipse fill="none" stroke="black" cx="228.65" cy="-26.8701" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="228.65" y="-30.6701" font-family="Times,serif" font-size="14.00">成分：谓</text>
 <text text-anchor="middle" x="228.65" y="-15.6701" font-family="Times,serif" font-size="14.00">深入贯彻</text>
 </g>
-<!-- 139894414539856&#45;&gt;139894423743512 -->
-<g id="edge6" class="edge"><title>139894414539856&#45;&gt;139894423743512</title>
+<!-- 139737471237032&#45;&gt;139737471266432 -->
+<g id="edge6" class="edge"><title>139737471237032&#45;&gt;139737471266432</title>
 <path fill="none" stroke="black" d="M271.678,-89.7598C265.318,-80.6112 258.078,-70.1971 251.374,-60.5554"/>
 <polygon fill="black" stroke="black" points="254.24,-58.5452 245.657,-52.3324 248.492,-62.541 254.24,-58.5452"/>
 </g>
-<!-- 139894423744072 -->
-<g id="node8" class="node"><title>139894423744072</title>
+<!-- 139737480437320 -->
+<g id="node8" class="node"><title>139737480437320</title>
 <ellipse fill="none" stroke="black" cx="351.65" cy="-26.8701" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="351.65" y="-30.6701" font-family="Times,serif" font-size="14.00">成分：宾</text>
 <text text-anchor="middle" x="351.65" y="-15.6701" font-family="Times,serif" font-size="14.00">……论述</text>
 </g>
-<!-- 139894414539856&#45;&gt;139894423744072 -->
-<g id="edge7" class="edge"><title>139894414539856&#45;&gt;139894423744072</title>
+<!-- 139737471237032&#45;&gt;139737480437320 -->
+<g id="edge7" class="edge"><title>139737471237032&#45;&gt;139737480437320</title>
 <path fill="none" stroke="black" d="M307.583,-90.2321C314.111,-80.9939 321.585,-70.4167 328.502,-60.6293"/>
 <polygon fill="black" stroke="black" points="331.485,-62.4717 334.398,-52.2851 325.769,-58.432 331.485,-62.4717"/>
 </g>
-<!-- 139894423743568 -->
-<g id="node10" class="node"><title>139894423743568</title>
+<!-- 139737480437488 -->
+<g id="node10" class="node"><title>139737480437488</title>
 <ellipse fill="none" stroke="black" cx="469.65" cy="-26.8701" rx="48.1917" ry="18"/>
 <text text-anchor="middle" x="469.65" y="-23.1701" font-family="Times,serif" font-size="14.00">成分：主</text>
 </g>
-<!-- 139894414572904&#45;&gt;139894423743568 -->
-<g id="edge9" class="edge"><title>139894414572904&#45;&gt;139894423743568</title>
+<!-- 139737471237144&#45;&gt;139737480437488 -->
+<g id="edge9" class="edge"><title>139737471237144&#45;&gt;139737480437488</title>
 <path fill="none" stroke="black" d="M555.406,-91.6348C537.579,-78.3793 515.617,-62.0494 498.382,-49.2338"/>
 <polygon fill="black" stroke="black" points="500.453,-46.4119 490.339,-43.2536 496.276,-52.0292 500.453,-46.4119"/>
 </g>
-<!-- 139894423743624 -->
-<g id="node11" class="node"><title>139894423743624</title>
+<!-- 139737480436760 -->
+<g id="node11" class="node"><title>139737480436760</title>
 <ellipse fill="none" stroke="black" cx="587.65" cy="-26.8701" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="587.65" y="-30.6701" font-family="Times,serif" font-size="14.00">成分：谓</text>
 <text text-anchor="middle" x="587.65" y="-15.6701" font-family="Times,serif" font-size="14.00">提高</text>
 </g>
-<!-- 139894414572904&#45;&gt;139894423743624 -->
-<g id="edge10" class="edge"><title>139894414572904&#45;&gt;139894423743624</title>
+<!-- 139737471237144&#45;&gt;139737480436760 -->
+<g id="edge10" class="edge"><title>139737471237144&#45;&gt;139737480436760</title>
 <path fill="none" stroke="black" d="M587.65,-89.2852C587.65,-81.3185 587.65,-72.4275 587.65,-63.9391"/>
 <polygon fill="black" stroke="black" points="591.15,-63.874 587.65,-53.874 584.15,-63.8741 591.15,-63.874"/>
 </g>
-<!-- 139894423743680 -->
-<g id="node12" class="node"><title>139894423743680</title>
+<!-- 139737480436816 -->
+<g id="node12" class="node"><title>139737480436816</title>
 <ellipse fill="none" stroke="black" cx="710.65" cy="-26.8701" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="710.65" y="-30.6701" font-family="Times,serif" font-size="14.00">成分：宾</text>
 <text text-anchor="middle" x="710.65" y="-15.6701" font-family="Times,serif" font-size="14.00">……站位</text>
 </g>
-<!-- 139894414572904&#45;&gt;139894423743680 -->
-<g id="edge11" class="edge"><title>139894414572904&#45;&gt;139894423743680</title>
+<!-- 139737471237144&#45;&gt;139737480436816 -->
+<g id="edge11" class="edge"><title>139737471237144&#45;&gt;139737480436816</title>
 <path fill="none" stroke="black" d="M621.261,-91.6348C637.13,-80.3145 656.143,-66.752 672.546,-55.051"/>
 <polygon fill="black" stroke="black" points="674.747,-57.7801 680.856,-49.1235 670.682,-52.0814 674.747,-57.7801"/>
 </g>
-<!-- 139894423743792 -->
-<g id="node14" class="node"><title>139894423743792</title>
+<!-- 139737480436928 -->
+<g id="node14" class="node"><title>139737480436928</title>
 <ellipse fill="none" stroke="black" cx="828.65" cy="-26.8701" rx="48.1917" ry="18"/>
 <text text-anchor="middle" x="828.65" y="-23.1701" font-family="Times,serif" font-size="14.00">成分：主</text>
 </g>
-<!-- 139894423743848&#45;&gt;139894423743792 -->
-<g id="edge13" class="edge"><title>139894423743848&#45;&gt;139894423743792</title>
+<!-- 139737480437096&#45;&gt;139737480436928 -->
+<g id="edge13" class="edge"><title>139737480437096&#45;&gt;139737480436928</title>
 <path fill="none" stroke="black" d="M870.585,-90.2321C862.72,-78.5361 853.412,-64.6938 845.566,-53.0253"/>
 <polygon fill="black" stroke="black" points="848.383,-50.9429 839.899,-44.5976 842.574,-54.849 848.383,-50.9429"/>
 </g>
-<!-- 139894423742000 -->
-<g id="node15" class="node"><title>139894423742000</title>
+<!-- 139737480436984 -->
+<g id="node15" class="node"><title>139737480436984</title>
 <ellipse fill="none" stroke="black" cx="946.65" cy="-26.8701" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="946.65" y="-30.6701" font-family="Times,serif" font-size="14.00">成分：谓</text>
 <text text-anchor="middle" x="946.65" y="-15.6701" font-family="Times,serif" font-size="14.00">落实</text>
 </g>
-<!-- 139894423743848&#45;&gt;139894423742000 -->
-<g id="edge14" class="edge"><title>139894423743848&#45;&gt;139894423742000</title>
+<!-- 139737480437096&#45;&gt;139737480436984 -->
+<g id="edge14" class="edge"><title>139737480437096&#45;&gt;139737480436984</title>
 <path fill="none" stroke="black" d="M904.716,-90.2321C910.813,-81.1648 917.778,-70.8074 924.256,-61.173"/>
 <polygon fill="black" stroke="black" points="927.355,-62.8375 930.03,-52.5861 921.546,-58.9314 927.355,-62.8375"/>
 </g>
-<!-- 139894423741664 -->
-<g id="node16" class="node"><title>139894423741664</title>
+<!-- 139737480437040 -->
+<g id="node16" class="node"><title>139737480437040</title>
 <ellipse fill="none" stroke="black" cx="1069.65" cy="-26.8701" rx="52.1524" ry="26.7407"/>
 <text text-anchor="middle" x="1069.65" y="-30.6701" font-family="Times,serif" font-size="14.00">成分：宾</text>
 <text text-anchor="middle" x="1069.65" y="-15.6701" font-family="Times,serif" font-size="14.00">……责任</text>
 </g>
-<!-- 139894423743848&#45;&gt;139894423741664 -->
-<g id="edge15" class="edge"><title>139894423743848&#45;&gt;139894423741664</title>
+<!-- 139737480437096&#45;&gt;139737480437040 -->
+<g id="edge15" class="edge"><title>139737480437096&#45;&gt;139737480437040</title>
 <path fill="none" stroke="black" d="M933.107,-93.696C960.634,-80.4256 995.652,-63.5438 1023.33,-50.1992"/>
 <polygon fill="black" stroke="black" points="1024.93,-53.3149 1032.42,-45.8195 1021.89,-47.0094 1024.93,-53.3149"/>
 </g>

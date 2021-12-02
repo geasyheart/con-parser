@@ -16,3 +16,5 @@ MODEL_PATH = DATA_PATH.joinpath('savepoint')
 
 # 如果一个句子中词语的个数超过50那么则忽略这条数据，显存不够
 WORD_COUNT = 75
+
+PRETRAINED_NAME_OR_PATH = 'hfl/chinese-electra-180g-small-discriminator'
