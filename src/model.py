@@ -53,8 +53,8 @@ class CRFConstituencyModel(nn.Module):
 
         x = self.encoder(words)
 
-        x_f, x_b = x.chunk(2, -1)
-        x = torch.cat((x_f[:, :-1], x_b[:, 1:]), -1)
+        # x_f, x_b = x.chunk(2, -1)
+        # x = torch.cat((x_f[:, :-1], x_b[:, 1:]), -1)
 
         tags_x = self.tags_embedding(tags)
         x = torch.cat([x, tags_x], dim=-1)

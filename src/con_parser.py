@@ -7,14 +7,14 @@ import torch
 from torch import nn
 from torch.nn.utils.rnn import pad_sequence
 from tqdm import tqdm
-from transformers import get_linear_schedule_with_warmup, AdamW, set_seed, AutoTokenizer
+from transformers import get_linear_schedule_with_warmup, set_seed, AutoTokenizer
 
 from src.algo import Tree
 from src.config import MODEL_PATH
 from src.metric import SpanMetric
 from src.model import CRFConstituencyModel
 from src.transform import ConTransform, get_labels, encoder_texts, get_tags
-from src.utils import logger
+from src.utils import logger, build_optimizer_for_pretrained
 
 
 class ConParser(object):
@@ -47,32 +47,28 @@ class ConParser(object):
             self,
             warmup_steps: Union[float, int],
             num_training_steps: int,
-            lr=1e-5, weight_decay=0.01,
+            lr=1e-3,
+            transformer_lr=1e-5,
+            weight_decay=0.01,
     ):
         """
         https://github.com/huggingface/transformers/blob/7b75aa9fa55bee577e2c7403301ed31103125a35/src/transformers/trainer.py#L232
         :param warmup_steps:
         :param num_training_steps:
         :param lr:
+        :param transformer_lr:
         :param weight_decay:
         :return:
         """
         if warmup_steps <= 1:
             warmup_steps = int(num_training_steps * warmup_steps)
-        # Prepare optimizer and schedule (linear warmup and decay)
-        no_decay = ["bias", "LayerNorm.weight"]
-        optimizer_grouped_parameters = [
-            {
-                "params": [p for n, p in self.model.named_parameters() if not any(nd in n for nd in no_decay)],
-                "weight_decay": weight_decay,
-            },
-            {
-                "params": [p for n, p in self.model.named_parameters() if any(nd in n for nd in no_decay)],
-                "weight_decay": 0.0,
-            },
-        ]
-        optimizer = AdamW(optimizer_grouped_parameters, lr=lr)
-
+        optimizer = build_optimizer_for_pretrained(
+            model=self.model,
+            pretrained=self.model.encoder.transformer,
+            lr=lr,
+            weight_decay=weight_decay,
+            transformer_lr=transformer_lr
+        )
         scheduler = get_linear_schedule_with_warmup(
             optimizer, num_warmup_steps=warmup_steps, num_training_steps=num_training_steps
         )
@@ -84,7 +80,8 @@ class ConParser(object):
             shuffle=shuffle
         )
 
-    def fit(self, train_path, dev_path, epoch=100, lr=1e-3, pretrained_model_name=None, batch_size=32,
+    def fit(self, train_path, dev_path, epoch=100, lr=1e-3, transformer_lr=1e-5, pretrained_model_name=None,
+            batch_size=32,
             warmup_steps=0.1):
         set_seed(seed=123231)
 
@@ -107,7 +104,7 @@ class ConParser(object):
 
         optimizer, scheduler = self.build_optimizer(
             warmup_steps=warmup_steps, num_training_steps=len(train_dataloader) * epoch,
-            lr=lr
+            lr=lr, transformer_lr=transformer_lr
         )
         return self.fit_loop(train_dataloader, dev_dataloader, epoch=epoch, optimizer=optimizer,
                              scheduler=scheduler)
@@ -157,16 +154,17 @@ class ConParser(object):
         self.model.train()
         total_loss = 0.
 
-        for data in tqdm(train, desc='fit_dataloader'):
+        t = tqdm(train, desc='fit_dataloader')
+        for data in t:
             words, tags, trees, charts = data
-            word_mask = words.ne(self.tokenizer.pad_token_id)[:, 1:]
+            word_mask = words.ne(self.tokenizer.pad_token_id)
             mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
-            mask = (mask.unsqueeze(1) & mask.unsqueeze(2)).triu_(1)
+            mask = torch.triu(mask.unsqueeze(1) & mask.unsqueeze(2), 1)
             s_span, s_label = self.model(words, tags)
             loss, _ = self.model.loss(s_span, s_label, charts, mask, False)
             total_loss += loss.item()
             loss.backward()
-
+            t.set_postfix_str(f'lr: {scheduler.get_last_lr()[0]}, loss: {total_loss}')
             self._step(optimizer=optimizer, scheduler=scheduler)
         total_loss /= len(train)
         return total_loss
@@ -181,9 +179,9 @@ class ConParser(object):
         total_loss, metric = 0, SpanMetric()
 
         for words, tags, trees, charts in tqdm(dev, desc='evaluate_dataloader'):
-            word_mask = words.ne(self.tokenizer.pad_token_id)[:, 1:]
+            word_mask = words.ne(self.tokenizer.pad_token_id)
             mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
-            mask = (mask.unsqueeze(1) & mask.unsqueeze(2)).triu_(1)
+            mask = torch.triu(mask.unsqueeze(1) & mask.unsqueeze(2), 1)
             s_span, s_label = self.model(words, tags)
             loss, s_span = self.model.loss(s_span, s_label, charts, mask, False)
             chart_preds = self.model.decode(s_span, s_label, mask)
