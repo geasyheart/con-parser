@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 #
 import uuid
+from typing import List, Tuple
 
 from constituency_labeling import label_tree
 
@@ -16,6 +17,41 @@ def label_without_number(label: str):
     :return:
     """
     return "".join([l for l in label if not l.isdigit()])
+
+
+def get_word_cuts(words: str, cut_words: List[Tuple[str, str]]) -> List[Tuple[str, str]]:
+    """
+    这个方法可能有问题，如果相同的words，在cut_words可能有不同的cut结果
+    不过可能性应该很小，忽略
+    :param words:
+    :param cut_words:
+    :return:
+    """
+    indices = [index for index, (cut_word, cut_pos) in enumerate(cut_words) if words.find(cut_word) == 0]
+    if not indices:
+        raise ValueError(f'标注的结果和分词的结果有冲突->{words}<-')
+    words_len = len(words)
+    cut_words_len = len(cut_words)
+
+    def _get_result(i: int):
+        p_i = i + 1
+        while True:
+            w = "".join([i[0] for i in cut_words[i:p_i]])
+            len_w = len(w)
+            if words_len < len_w:
+                return False, []
+            elif words_len == len_w:
+                return words == w, cut_words[i:p_i]
+            else:
+                if p_i > cut_words_len:
+                    return False, []
+                p_i += 1
+
+    for index in indices:
+        exist, cc = _get_result(index)
+        if exist:
+            return cc
+    raise ValueError(f'标注的结果和分词的结果有冲突->{words}<-')
 
 
 def convert_frontend_to_label_tree_base(frontend: FrontendTree) -> label_tree.LabelTree:
@@ -73,8 +109,6 @@ def convert_frontend_to_label_tree_by_single_word(ftree: FrontendTree) -> label_
     1. 以字为单位
     2. 以wordpiece为单位
 
-    这里采用1方式，为什么？如果wordpiece有边界冲突问题，虽然概率很小。。。反正你都可以尝试
-
      他的词性设置为`pos`，即空缺
     :param ftree:
     :return:
@@ -99,14 +133,56 @@ def convert_frontend_to_label_tree_by_single_word(ftree: FrontendTree) -> label_
     return ltree
 
 
-def convert_frontend_to_label_tree_by_cut_words(ftree: FrontendTree) -> label_tree.LabelTree:
+def convert_frontend_to_label_tree_by_cut_words(
+        ftree: FrontendTree,
+        cut_words: List[Tuple[str, str]]
+) -> label_tree.LabelTree:
     """
     以分词为单位作为叶子节点
 
     首先句子分词，然后找到叶子节点进行分割，如果没有边界问题，那么则皆大欢喜，证明这条路可以尝试
     如果边界问题比较严重，那么只能使用以字为单位的了
     :param ftree:
+    :param cut_words:
     :return:
     """
     ltree = convert_frontend_to_label_tree_base(frontend=ftree)
-    raise NotImplementedError
+
+    new_nodes = []
+    for node in ltree.dfs(node=ltree.root):
+        if node.children: continue
+
+        for _cut_words in get_word_cuts(node.cut_words, cut_words=cut_words):
+            new_node = label_tree.Node(
+                id=str(uuid.uuid4()),
+                cut_words=[_cut_words],
+                label='',
+                extra=None
+            )
+
+            new_nodes.append((node, new_node))
+    for (parent_node, new_child_node) in new_nodes:
+        new_child_node.set_parent(parent_node)
+        parent_node.add_child(node=new_child_node)
+    return ltree
+
+
+def convert_frontend_to_label_tree_by_word_piece(ftree: FrontendTree, tokenize) -> label_tree.LabelTree:
+    ltree = convert_frontend_to_label_tree_base(frontend=ftree)
+    new_nodes = []
+    for node in ltree.dfs(node=ltree.root):
+        if node.children: continue
+
+        for word_piece in tokenize.tokenize(node.cut_words):
+            new_node = label_tree.Node(
+                id=str(uuid.uuid4()),
+                cut_words=[(word_piece, 'pos')],
+                label='',
+                extra=None
+            )
+
+            new_nodes.append((node, new_node))
+    for (parent_node, new_child_node) in new_nodes:
+        new_child_node.set_parent(parent_node)
+        parent_node.add_child(node=new_child_node)
+    return ltree
