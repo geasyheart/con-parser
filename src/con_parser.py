@@ -30,9 +30,18 @@ class ConParser(object):
 
         self.tags = get_tags()
 
+    @property
+    def real_model(self):
+        if isinstance(self.model, nn.DataParallel):
+            return self.model.module
+        return self.model
+
     def build_model(self, transformer):
         self.model = CRFConstituencyModel(transformer=transformer, n_labels=len(self.labels))
         self.model.to(self.device)
+        if torch.cuda.device_count() > 1:
+            self.model = nn.DataParallel(self.model)
+
         logger.info(self.model)
         return self.model
 
@@ -63,8 +72,8 @@ class ConParser(object):
         if warmup_steps <= 1:
             warmup_steps = int(num_training_steps * warmup_steps)
         optimizer = build_optimizer_for_pretrained(
-            model=self.model,
-            pretrained=self.model.encoder.transformer,
+            model=self.real_model,
+            pretrained=self.real_model.encoder.transformer,
             lr=lr,
             weight_decay=weight_decay,
             transformer_lr=transformer_lr
@@ -161,7 +170,7 @@ class ConParser(object):
             mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
             mask = torch.triu(mask.unsqueeze(1) & mask.unsqueeze(2), 1)
             s_span, s_label = self.model(words, tags)
-            loss, _ = self.model.loss(s_span, s_label, charts, mask, False)
+            loss, _ = self.real_model.loss(s_span, s_label, charts, mask, False)
             total_loss += loss.item()
             loss.backward()
             t.set_postfix_str(f'lr: {scheduler.get_last_lr()[0]}, loss: {total_loss}')
@@ -183,8 +192,8 @@ class ConParser(object):
             mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
             mask = torch.triu(mask.unsqueeze(1) & mask.unsqueeze(2), 1)
             s_span, s_label = self.model(words, tags)
-            loss, s_span = self.model.loss(s_span, s_label, charts, mask, False)
-            chart_preds = self.model.decode(s_span, s_label, mask)
+            loss, s_span = self.real_model.loss(s_span, s_label, charts, mask, False)
+            chart_preds = self.real_model.decode(s_span, s_label, mask)
             # since the evaluation relies on terminals,
             # the tree should be first built and then factorized
             preds = [Tree.build(tree, [(i, j, self.id_labels[label]) for i, j, label in chart])
@@ -231,7 +240,7 @@ class ConParser(object):
         s_span, s_label = self.model(words, tags)
         # if self.args.mbr:
         #     s_span = self.model.crf(s_span, mask, mbr=True)
-        chart_preds = self.model.decode(s_span, s_label, mask)
+        chart_preds = self.real_model.decode(s_span, s_label, mask)
         preds['trees'].extend([Tree.build(tree, [(i, j, self.id_labels[label]) for i, j, label in chart])
                                for tree, chart in zip(trees, chart_preds)])
 
