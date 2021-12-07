@@ -1,0 +1,390 @@
+﻿{
+  "data": [
+    {
+      "序号": 1,
+      "sentence": "新华社北京4月13日电 中共中央政治局常委、全国政协主席汪洋4月13日在京主持召开脱贫攻坚约谈会议并讲话。",
+      "预处理结果": "新华社北京4月13日电 中共中央政治局常委、全国政协主席汪洋主持召开脱贫攻坚约谈会议并讲话。",
+      "cut_words": [
+        [
+          "新华社",
+          "ORG"
+        ],
+        [
+          "北京",
+          "LOC"
+        ],
+        [
+          "4月13日电",
+          "TIME"
+        ],
+        [
+          " ",
+          "w"
+        ],
+        [
+          "中共中央政治局常委",
+          "ORG"
+        ],
+        [
+          "、",
+          "w"
+        ],
+        [
+          "全国政协",
+          "ORG"
+        ],
+        [
+          "主席",
+          "n"
+        ],
+        [
+          "汪洋",
+          "PER"
+        ],
+        [
+          "主持",
+          "v"
+        ],
+        [
+          "召开",
+          "v"
+        ],
+        [
+          "脱贫",
+          "vn"
+        ],
+        [
+          "攻坚",
+          "vn"
+        ],
+        [
+          "约",
+          "d"
+        ],
+        [
+          "谈",
+          "v"
+        ],
+        [
+          "会议",
+          "n"
+        ],
+        [
+          "并",
+          "c"
+        ],
+        [
+          "讲话",
+          "v"
+        ],
+        [
+          "。",
+          "w"
+        ]
+      ],
+      "isNeedRevise": "N",
+      "data": {
+        "words": "新华社北京4月13日电 中共中央政治局常委、全国政协主席汪洋主持召开脱贫攻坚约谈会议并讲话。",
+        "type": "主谓句",
+        "label": "",
+        "clause": "",
+        "supplySubject": false,
+        "child": [
+          {
+            "words": "新华社北京4月13",
+            "type": "",
+            "label": "主",
+            "clause": "",
+            "supplySubject": false,
+            "child": [],
+            "focus": false,
+            "uuid": "7c325ffc-8590-49f4-85a6-e288c95ac9d5"
+          },
+          {
+            "words": "电",
+            "type": "",
+            "label": "谓",
+            "clause": "",
+            "supplySubject": false,
+            "child": [],
+            "focus": false,
+            "uuid": "bb00441c-fe58-452c-87f8-7625d5ed4f3d"
+          },
+          {
+            "words": "中共中央政治局常委、全国政协主席汪洋主持召开脱贫攻坚约谈会议并讲话。",
+            "type": "主谓句",
+            "label": "宾",
+            "clause": "",
+            "supplySubject": false,
+            "child": [
+              {
+                "words": "中共中央政治局常委、全国政协主席汪洋",
+                "type": "",
+                "label": "主",
+                "clause": "",
+                "supplySubject": false,
+                "child": [],
+                "focus": false,
+                "uuid": "849b5a24-9959-4f6f-ba31-c07d68962b86"
+              },
+              {
+                "words": "主持召开",
+                "type": "",
+                "label": "谓",
+                "clause": "",
+                "supplySubject": false,
+                "child": [],
+                "focus": false,
+                "uuid": "b2b59764-a072-46ee-9da5-f910b494482c"
+              },
+              {
+                "words": "脱贫攻坚约谈会议并讲话。",
+                "type": "",
+                "label": "宾",
+                "clause": "",
+                "supplySubject": false,
+                "child": [],
+                "focus": false,
+                "uuid": "13be8194-1579-43cf-a488-4492f975823c"
+              }
+            ],
+            "focus": false,
+            "uuid": "f01b509c-2216-443b-8f60-a1ae2541aa55",
+            "typeSort": 1,
+            "isChange": false
+          }
+        ],
+        "focus": false,
+        "typeSort": 1,
+        "isChange": false
+      }
+    },
+    {
+      "序号": 2,
+      "sentence": "他强调，县一级在我们党的组织结构中处于承上启下的关键环节，县委书记是脱贫攻坚的“一线指挥官”。",
+      "预处理结果": "他强调，县一级处于承上启下的关键环节，县委书记是脱贫攻坚的“一线指挥官”。",
+      "cut_words": [
+        [
+          "他",
+          "r"
+        ],
+        [
+          "强调",
+          "v"
+        ],
+        [
+          "，",
+          "w"
+        ],
+        [
+          "县",
+          "n"
+        ],
+        [
+          "一级",
+          "m"
+        ],
+        [
+          "处于",
+          "v"
+        ],
+        [
+          "承上启下",
+          "vn"
+        ],
+        [
+          "的",
+          "u"
+        ],
+        [
+          "关键",
+          "a"
+        ],
+        [
+          "环节",
+          "n"
+        ],
+        [
+          "，",
+          "w"
+        ],
+        [
+          "县委书记",
+          "n"
+        ],
+        [
+          "是",
+          "v"
+        ],
+        [
+          "脱贫",
+          "v"
+        ],
+        [
+          "攻坚",
+          "v"
+        ],
+        [
+          "的",
+          "u"
+        ],
+        [
+          "“",
+          "w"
+        ],
+        [
+          "一线",
+          "n"
+        ],
+        [
+          "指挥官",
+          "n"
+        ],
+        [
+          "”",
+          "w"
+        ],
+        [
+          "。",
+          "w"
+        ]
+      ],
+      "isNeedRevise": "N",
+      "data": {
+        "words": "他强调，县一级处于承上启下的关键环节，县委书记是脱贫攻坚的“一线指挥官”。",
+        "type": "主谓句",
+        "label": "",
+        "clause": "",
+        "supplySubject": false,
+        "child": [
+          {
+            "words": "他",
+            "type": "",
+            "label": "主",
+            "clause": "",
+            "supplySubject": false,
+            "child": [],
+            "focus": false,
+            "uuid": "6875fc3a-0faa-4287-b843-63005c7e8224"
+          },
+          {
+            "words": "强调",
+            "type": "",
+            "label": "谓",
+            "clause": "",
+            "supplySubject": false,
+            "child": [],
+            "focus": false,
+            "uuid": "ffdac224-069e-402a-91ed-b6c2f6038559"
+          },
+          {
+            "words": "县一级处于承上启下的关键环节，县委书记是脱贫攻坚的“一线指挥官”。",
+            "type": "并列复句",
+            "label": "宾",
+            "clause": "",
+            "supplySubject": false,
+            "child": [
+              {
+                "words": "县一级处于承上启下的关键环节",
+                "type": "主谓句",
+                "label": "",
+                "clause": "并行1",
+                "clauseName": "并行",
+                "clauseIdx": 1,
+                "supplySubject": false,
+                "child": [
+                  {
+                    "words": "县一级",
+                    "type": "",
+                    "label": "主",
+                    "clause": "",
+                    "supplySubject": false,
+                    "child": [],
+                    "focus": false,
+                    "uuid": "25df6384-9d7c-44c9-b03f-39be9a0b2159"
+                  },
+                  {
+                    "words": "处于",
+                    "type": "",
+                    "label": "谓",
+                    "clause": "",
+                    "supplySubject": false,
+                    "child": [],
+                    "focus": false,
+                    "uuid": "1e1eb847-8467-4981-b0b6-1306fd1ee5cf"
+                  },
+                  {
+                    "words": "承上启下的关键环节",
+                    "type": "",
+                    "label": "宾",
+                    "clause": "",
+                    "supplySubject": false,
+                    "child": [],
+                    "focus": false,
+                    "uuid": "f232e36d-3d11-446d-9806-b9c920929899"
+                  }
+                ],
+                "focus": false,
+                "uuid": "27d345c7-4349-4f90-8ba4-a430b3ffa24c",
+                "typeSort": 1,
+                "isChange": false
+              },
+              {
+                "words": "县委书记是脱贫攻坚的“一线指挥官”。",
+                "type": "主谓句",
+                "label": "",
+                "clause": "并行2",
+                "clauseName": "并行",
+                "clauseIdx": 2,
+                "supplySubject": false,
+                "child": [
+                  {
+                    "words": "县委书记",
+                    "type": "",
+                    "label": "主",
+                    "clause": "",
+                    "supplySubject": false,
+                    "child": [],
+                    "focus": false,
+                    "uuid": "b85bc9f3-a246-4e6f-bec7-9e1666cf41d4"
+                  },
+                  {
+                    "words": "是",
+                    "type": "",
+                    "label": "谓",
+                    "clause": "",
+                    "supplySubject": false,
+                    "child": [],
+                    "focus": false,
+                    "uuid": "ec3ac72c-0757-41ad-a35d-387b59460104"
+                  },
+                  {
+                    "words": "脱贫攻坚的“一线指挥官”。",
+                    "type": "",
+                    "label": "宾",
+                    "clause": "",
+                    "supplySubject": false,
+                    "child": [],
+                    "focus": false,
+                    "uuid": "12c2c15a-26f2-4f2f-87b1-60ecdebdd7c6"
+                  }
+                ],
+                "focus": false,
+                "uuid": "18624bc3-3259-4c61-8104-fe8cd925f1d8",
+                "typeSort": 1,
+                "isChange": false
+              }
+            ],
+            "focus": false,
+            "uuid": "17d663f9-8943-4430-9038-2cf69cc9dfea",
+            "typeSort": 2,
+            "isChange": false
+          }
+        ],
+        "focus": false,
+        "typeSort": 1,
+        "isChange": false
+      }
+    }
+  ]
+}
