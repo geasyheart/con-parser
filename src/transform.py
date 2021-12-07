@@ -78,7 +78,7 @@ def encoder_texts(texts: List[List[str]], tokenizer):
     for text in texts:
         vector = []
 
-        text = [tokenizer.cls_token, *text]
+        text = [tokenizer.cls_token, *text, tokenizer.sep_token]
         input_ids = tokenizer.batch_encode_plus(
             text,
             add_special_tokens=False,

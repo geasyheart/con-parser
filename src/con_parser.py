@@ -166,9 +166,9 @@ class ConParser(object):
         t = tqdm(train, desc='fit_dataloader')
         for data in t:
             words, tags, trees, charts = data
-            word_mask = words.ne(self.tokenizer.pad_token_id)
+            word_mask = words.ne(self.tokenizer.pad_token_id)[:, 1:]
             mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
-            mask = torch.triu(mask.unsqueeze(1) & mask.unsqueeze(2), 1)
+            mask = (mask.unsqueeze(1) & mask.unsqueeze(2)).triu_(1)
             s_span, s_label = self.model(words, tags)
             loss, _ = self.real_model.loss(s_span, s_label, charts, mask, False)
             total_loss += loss.item()
@@ -188,9 +188,9 @@ class ConParser(object):
         total_loss, metric = 0, SpanMetric()
 
         for words, tags, trees, charts in tqdm(dev, desc='evaluate_dataloader'):
-            word_mask = words.ne(self.tokenizer.pad_token_id)
+            word_mask = words.ne(self.tokenizer.pad_token_id)[:, 1:]
             mask = word_mask if len(words.shape) < 3 else word_mask.any(-1)
-            mask = torch.triu(mask.unsqueeze(1) & mask.unsqueeze(2), 1)
+            mask = (mask.unsqueeze(1) & mask.unsqueeze(2)).triu_(1)
             s_span, s_label = self.model(words, tags)
             loss, s_span = self.real_model.loss(s_span, s_label, charts, mask, False)
             chart_preds = self.real_model.decode(s_span, s_label, mask)
