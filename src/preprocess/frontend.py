@@ -1,6 +1,5 @@
 # -*- coding: utf8 -*-
 #
-import json
 from typing import List, Dict, Optional, Iterable
 
 
@@ -26,6 +25,7 @@ class FrontendNode(object):
         self.supply_subject = supply_subject
         self.child = child or []
 
+        self.check_node_valid()
         self.children: List['FrontendNode'] = []
         self.parent: 'FrontendNode' = None
 
@@ -34,6 +34,18 @@ class FrontendNode(object):
 
     def set_parent(self, node: 'FrontendNode'):
         self.parent = node
+
+    def check_node_valid(self):
+        """
+        这里增加一个判断
+        :return:
+        """
+        if (not self.label) and (not self.type) and (not self.clause):
+            raise ValueError('无效的节点')
+        if self.type and self.clause:
+            raise ValueError('句型和分句句型不应该同时存在,他俩互斥')
+        if self.clause and self.label:
+            raise ValueError('分句句型不应该有成分')
 
     def __repr__(self):
         s = ''
