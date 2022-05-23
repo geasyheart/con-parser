@@ -1,0 +1,6 @@
+src/data/company_data/dev.txt filter=lfs diff=lfs merge=lfs -text
+src/data/company_data/final_data.json filter=lfs diff=lfs merge=lfs -text
+src/data/company_data/final_nltk_data.txt filter=lfs diff=lfs merge=lfs -text
+src/data/company_data/final_zx_data.json filter=lfs diff=lfs merge=lfs -text
+src/data/company_data/train.txt filter=lfs diff=lfs merge=lfs -text
+src/data/company_data/view_data.json filter=lfs diff=lfs merge=lfs -text

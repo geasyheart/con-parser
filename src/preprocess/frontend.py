@@ -11,7 +11,7 @@ class FrontendNode(object):
     ):
         """
 
-        :param words: 长方形显示的字
+        :param words: 长方形显示的字, 空表示没有主语
         :param type: 句型
         :param label: 成分，圆圈里的内容
         :param clause: 分句，椭圆里的内容
@@ -42,10 +42,12 @@ class FrontendNode(object):
         """
         if (not self.label) and (not self.type) and (not self.clause):
             raise ValueError('无效的节点')
-        if self.type and self.clause:
-            raise ValueError('句型和分句句型不应该同时存在,他俩互斥')
-        if self.clause and self.label:
-            raise ValueError('分句句型不应该有成分')
+        # if self.type and self.clause:
+        #     raise ValueError('句型和分句句型不应该同时存在,他俩互斥')
+        # if self.clause and self.label:
+        #     raise ValueError('分句句型不应该有成分')
+        # if self.label and (self.type or self.clause):
+        #     raise ValueError('成分有的情况下，不应该再有其他的')
 
     def __repr__(self):
         s = ''
@@ -105,6 +107,13 @@ class FrontendTree(object):
                 level_nodes.extend(node.children)
         if level_nodes:
             yield from self.bfs(nodes=level_nodes)
+
+    def bfs_by_single_node(self, nodes: List[FrontendNode]):
+        if nodes:
+            yield nodes
+        for node in nodes:
+            if node.children:
+                yield from self.bfs_by_single_node(nodes=node.children)
 
     def dfs(self, node: Optional[FrontendNode] = None) -> Iterable[FrontendNode]:
         if node:

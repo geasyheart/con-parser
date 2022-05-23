@@ -2,12 +2,12 @@
 #
 import pathlib
 
-DATA_PATH = pathlib.Path('.').parent.joinpath('data')
+DATA_PATH = pathlib.Path(__file__).parent.joinpath('data')
 
-TRAIN_PATH = DATA_PATH.joinpath('train.noempty.txt')
-DEV_PATH = DATA_PATH.joinpath('dev.noempty.txt')
-TEST_PATH = DATA_PATH.joinpath('test.noempty.txt')
-SAMPLE_PATH = DATA_PATH.joinpath('sample.noempty.txt')
+TRAIN_PATH = DATA_PATH.joinpath('company_data').joinpath('train.txt')
+DEV_PATH = DATA_PATH.joinpath('company_data').joinpath('dev.txt')
+# TEST_PATH = DATA_PATH.joinpath('test.noempty.txt')
+# SAMPLE_PATH = DATA_PATH.joinpath('sample.noempty.txt')
 
 MODEL_PATH = DATA_PATH.joinpath('savepoint')
 

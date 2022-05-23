@@ -15,7 +15,7 @@ from src.config import DATA_PATH, TRAIN_PATH, DEV_PATH, WORD_COUNT
 
 
 def get_labels() -> Dict:
-    label_map_path = DATA_PATH.joinpath('label_map.json')
+    label_map_path = DATA_PATH.joinpath('company_data').joinpath('label_map.json')
     if label_map_path.exists():
         with open(label_map_path, 'r', encoding='utf-8') as f:
             return json.loads(f.read())
@@ -43,7 +43,7 @@ def get_labels() -> Dict:
 
 
 def get_tags() -> Dict:
-    pos_map_path = DATA_PATH.joinpath('pos_map.json')
+    pos_map_path = DATA_PATH.joinpath('company_data').joinpath('pos_map.json')
     if pos_map_path.exists():
         with open(pos_map_path, 'r', encoding='utf-8') as f:
             return json.loads(f.read())
@@ -144,10 +144,15 @@ class ConTransform(dataset.Dataset):
 
 
 if __name__ == '__main__':
-    texts = [['\ue5f1\ue5f1\ue5f1\ue5f1']]
-    encoder_texts(
-        texts,
-        AutoTokenizer.from_pretrained(
+    # texts = [['\ue5f1\ue5f1\ue5f1\ue5f1']]
+    # encoder_texts(
+    #     texts,
+    #     AutoTokenizer.from_pretrained(
+    #         'hfl/chinese-electra-180g-small-discriminator'
+    #     )
+    # )
+    t = AutoTokenizer.from_pretrained(
             'hfl/chinese-electra-180g-small-discriminator'
         )
-    )
+    for i in ConTransform(path='/home/yuzhang/PycharmProjects/con-parser/src/data/company_data/train.txt', transformer=t).to_dataloader(32, False):
+        print(i)
